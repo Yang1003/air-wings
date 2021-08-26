@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "066ea854-f29f-4810-b5cb-6a689f1309c4"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -7,10 +10,42 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
+          "skipTests": false,
+          "flat": false,
+          "inlineStyle": true,
+          "inlineTemplate": false,
           "style": "less"
         },
         "@schematics/angular:application": {
           "strict": true
+        },
+        "ng-alain:module": {
+          "routing": true,
+          "skipTests": false
+        },
+        "ng-alain:list": {
+          "skipTests": false
+        },
+        "ng-alain:edit": {
+          "skipTests": false,
+          "modal": true
+        },
+        "ng-alain:view": {
+          "skipTests": false,
+          "modal": true
+        },
+        "ng-alain:curd": {
+          "skipTests": false
+        },
+        "@schematics/angular:module": {
+          "routing": true,
+          "skipTests": false
+        },
+        "@schematics/angular:directive": {
+          "skipTests": false
+        },
+        "@schematics/angular:service": {
+          "skipTests": false
         }
       },
       "root": "",
@@ -33,15 +68,22 @@
             "styles": [
               "src/styles.less"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "@antv/g2",
+              "ajv",
+              "ajv-formats",
+              "date-fns",
+              "file-saver"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -78,7 +120,10 @@
               "browserTarget": "air-wings:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -102,6 +147,15 @@
               "src/styles.less"
             ],
             "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
